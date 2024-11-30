@@ -41,7 +41,7 @@ body {
 }
 
 #question {
-  font-size: 24px;
+  font-size: 22px; /* 기본 크기 */
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -53,7 +53,7 @@ body {
 }
 
 .choice {
-  padding: 10px 20px;
+  padding: 12px 20px; /* 버튼 크기 증가 */
   background-color: #333;
   color: white;
   border: 2px solid #555;
@@ -98,13 +98,13 @@ input[type="number"] {
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 24px; /* 버튼 크기 증가 */
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px; /* 폰트 크기 증가 */
 }
 
 button:hover {
@@ -117,15 +117,26 @@ button:active {
 
 /* 반응형 디자인 */
 @media (max-width: 600px) {
+  body {
+    font-size: 16px; /* 모바일에서 전체 글씨 크기 증가 */
+  }
+
   .container {
     width: 90%;
     padding: 10px;
   }
+
   #question {
-    font-size: 20px;
+    font-size: 20px; /* 질문 크기 조정 */
   }
+
   .choice {
     font-size: 16px;
-    padding: 8px;
+    padding: 10px 16px; /* 모바일 버튼 크기 조정 */
+  }
+
+  button {
+    font-size: 16px; /* 버튼 글씨 크기 조정 */
+    padding: 10px 16px;
   }
 }
