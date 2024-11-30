@@ -53,13 +53,13 @@ body {
 }
 
 .choice {
-  padding: 12px 20px; /* 버튼 크기 증가 */
+  padding: 12px 20px; /* 기본 버튼 크기 */
   background-color: #333;
   color: white;
   border: 2px solid #555;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 18px; /* 기본 버튼 글씨 크기 */
   transition: background-color 0.2s, border-color 0.2s;
 }
 
@@ -98,13 +98,13 @@ input[type="number"] {
 }
 
 button {
-  padding: 12px 24px; /* 버튼 크기 증가 */
+  padding: 12px 24px; /* 기본 버튼 크기 */
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* 폰트 크기 증가 */
+  font-size: 18px; /* 기본 버튼 글씨 크기 */
 }
 
 button:hover {
@@ -115,39 +115,15 @@ button:active {
   background-color: #003f7f;
 }
 
-/* 반응형 디자인 */
+/* 반응형 디자인: 모바일 전용 */
 @media (max-width: 600px) {
   body {
-    font-size: 16px; /* 모바일에서 전체 글씨 크기 증가 */
+    font-size: 20px; /* 모바일에서 전체 글씨 크기 증가 */
   }
 
   .container {
     width: 90%;
-    padding: 10px;
-  }
-
-  #question {
-    font-size: 20px; /* 질문 크기 조정 */
-  }
-
-  .choice {
-    font-size: 16px;
-    padding: 10px 16px; /* 모바일 버튼 크기 조정 */
-  }
-
-  button {
-    font-size: 16px; /* 버튼 글씨 크기 조정 */
-    padding: 10px 16px;
-  }
-}
-
-
-
-
-/* 반응형 디자인: 모바일 전용 */
-@media (max-width: 600px) {
-  body {
-    font-size: 20px; /* 전체 글씨 크기 더 키움 */
+    padding: 15px; /* 여유 공간 추가 */
   }
 
   #question {
@@ -155,12 +131,12 @@ button:active {
   }
 
   .choice {
-    font-size: 24px; /* 선택지 글씨 크기 2배로 확대 */
-    padding: 20px 30px; /* 버튼 크기 2배로 증가 */
+    font-size: 24px; /* 선택지 글씨 크기 증가 */
+    padding: 20px 30px; /* 버튼 크기 증가 */
   }
 
   button {
-    font-size: 24px; /* 버튼 글씨 크기 2배로 확대 */
+    font-size: 24px; /* 버튼 글씨 크기 증가 */
     padding: 20px 30px; /* 버튼 크기 증가 */
   }
 
