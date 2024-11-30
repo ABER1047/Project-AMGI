@@ -34,14 +34,14 @@ function startQuiz() {
 function updateStats() {
   document.getElementById('correct-count').innerText = correctCount;
   document.getElementById('total-count').innerText = words.length;
-  const progress = (correctCount / words.length) * 100;
-  document.getElementById('progress').style.width = progress + '%';
+  const progress = (questionIndex / words.length) * 100; // 전체 진행률
+  document.getElementById('progress').style.width = `${progress}%`;
 }
 
 function loadNextQuestion() {
   if (questionIndex >= words.length) {
     alert(`학습 완료! 정답률: ${(correctCount / words.length * 100).toFixed(1)}%`);
-    location.reload();
+    location.reload(); // 페이지 새로고침
     return;
   }
 
@@ -53,20 +53,21 @@ function loadNextQuestion() {
   const choices = generateChoices(correctAnswer, mode);
   renderQuestion(question, choices, correctAnswer);
 
+  // questionIndex 증가
   questionIndex++;
 }
 
 function generateChoices(correctAnswer, mode) {
   const choicesCount = parseInt(document.getElementById('choices-count').value);
-  const choices = [correctAnswer];
+  const choices = new Set([correctAnswer]);
 
-  while (choices.length < choicesCount) {
+  while (choices.size < Math.min(choicesCount, words.length)) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
     const choice = mode === 'hide-word' ? randomItem.word : randomItem.meaning;
-    if (!choices.includes(choice)) choices.push(choice);
+    choices.add(choice);
   }
 
-  return shuffleArray(choices);
+  return shuffleArray([...choices]);
 }
 
 function renderQuestion(question, choices, correctAnswer) {
