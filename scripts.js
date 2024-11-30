@@ -45,10 +45,6 @@ function removeDuplicates(wordPairs) {
     const trimmedMeaning = pair.meaning.trim();
     if (!wordMap.has(trimmedWord)) {
       wordMap.set(trimmedWord, trimmedMeaning);
-    } else {
-      // 중복된 단어의 뜻을 추가
-      const existingMeaning = wordMap.get(trimmedWord);
-      wordMap.set(trimmedWord, `${existingMeaning}, ${trimmedMeaning}`);
     }
   });
 
@@ -88,12 +84,16 @@ function generateChoices(correctAnswer, mode) {
     return [];
   }
 
-  const choices = new Set([correctAnswer]);
+  const correctMeaning = mode === 'hide-word'
+    ? words.find(pair => pair.word === correctAnswer).meaning
+    : correctAnswer;
+
+  const choices = new Set([correctMeaning]); // 정답 뜻을 먼저 추가
 
   while (choices.size < choicesCount) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
-    const choice = mode === 'hide-word' ? randomItem.word : randomItem.meaning;
-    choices.add(choice);
+    const choice = randomItem.meaning; // 선택지는 뜻으로만 구성
+    choices.add(choice); // 중복 방지
   }
 
   return shuffleArray([...choices]);
@@ -103,7 +103,7 @@ function renderQuestion(question, choices, correctAnswer) {
   document.getElementById('question').innerText = question;
 
   const choicesContainer = document.getElementById('choices');
-  const fragment = document.createDocumentFragment();  // DOM 조작 최적화
+  const fragment = document.createDocumentFragment(); // DOM 조작 최적화
 
   choices.forEach(choice => {
     const button = document.createElement('button');
