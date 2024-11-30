@@ -11,19 +11,19 @@ async function startQuiz() {
 
   const lines = input.split('\n').map(line => line.trim());
   const validPairs = [];
-  
-  // 입력된 단어-뜻 쌍을 유효한 형태로 변환하고 중복을 처리
+
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] && lines[i].includes(' ')) {
       const [word, meaning] = lines[i].split(/\s+/);
       validPairs.push({ word, meaning });
     }
-
-    // 일정 단위마다 브라우저에 시간을 줘서 로딩을 방지
-    if (i % 50 === 0) await new Promise(resolve => setTimeout(resolve, 0));
   }
 
-  // 중복 단어-뜻 쌍 처리
+  // 단어-뜻 쌍 개수 유효성 검사
+  if (validPairs.length % 2 !== 0) {
+    return alert('총 짝수개의 단어-뜻 쌍이 입력되어야 합니다.');
+  }
+
   words = removeDuplicates(validPairs);
 
   if (words.length === 0) return alert('유효한 단어-뜻 쌍이 없습니다.');
@@ -79,6 +79,14 @@ async function loadNextQuestion() {
 
 function generateChoices(correctAnswer, mode) {
   const choicesCount = parseInt(document.getElementById('choices-count').value, 10);
+
+  // 단어 개수가 선택지 수보다 적은 경우 처리
+  if (words.length < choicesCount) {
+    alert(`단어 수가 선택지 수(${choicesCount})보다 적습니다. 단어를 더 입력하세요.`);
+    resetQuiz();
+    return [];
+  }
+
   const choices = [correctAnswer];
 
   while (choices.length < choicesCount) {
