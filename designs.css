@@ -147,24 +147,24 @@ button:active {
 /* 반응형 디자인: 모바일 전용 */
 @media (max-width: 600px) {
   body {
-    font-size: 18px; /* 전체 글씨 크기 증가 */
+    font-size: 20px; /* 전체 글씨 크기 더 키움 */
   }
 
   #question {
-    font-size: 24px; /* 질문 크기 증가 */
+    font-size: 30px; /* 질문 크기 2배로 확대 */
   }
 
   .choice {
-    font-size: 20px; /* 선택지 글씨 크기 증가 */
-    padding: 15px 20px; /* 버튼 크기 증가 */
+    font-size: 24px; /* 선택지 글씨 크기 2배로 확대 */
+    padding: 20px 30px; /* 버튼 크기 2배로 증가 */
   }
 
   button {
-    font-size: 20px; /* 버튼 글씨 크기 증가 */
-    padding: 15px 20px; /* 버튼 크기 증가 */
+    font-size: 24px; /* 버튼 글씨 크기 2배로 확대 */
+    padding: 20px 30px; /* 버튼 크기 증가 */
   }
 
   #progress-bar {
-    height: 12px; /* 진행 바 높이 증가 */
+    height: 16px; /* 진행 바 높이 증가 */
   }
 }
