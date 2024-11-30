@@ -9,10 +9,9 @@ async function startQuiz() {
   const input = document.getElementById('word-input').value.trim();
   if (!input) return alert('단어와 뜻을 입력하세요.');
 
-  // 입력 문자열을 줄바꿈 단위 또는 공백 단위로 나누기
   let lines = input.includes('\n') 
-    ? input.split('\n').map(line => line.trim()) // 줄바꿈 기준으로 처리
-    : input.split(/\s+/); // 공백 기준으로 처리
+    ? input.split('\n').map(line => line.trim()) 
+    : input.split(/\s+/);
 
   const validPairs = [];
   for (let i = 0; i < lines.length; i += 2) {
@@ -45,6 +44,9 @@ function removeDuplicates(wordPairs) {
     const trimmedMeaning = pair.meaning.trim();
     if (!wordMap.has(trimmedWord)) {
       wordMap.set(trimmedWord, trimmedMeaning);
+    } else {
+      const existingMeaning = wordMap.get(trimmedWord);
+      wordMap.set(trimmedWord, `${existingMeaning}, ${trimmedMeaning}`);
     }
   });
 
@@ -65,17 +67,16 @@ async function loadNextQuestion() {
   }
 
   const currentQuestion = words[questionIndex];
-  const mode = Math.random() > 0.5 ? 'hide-word' : 'hide-meaning';
-  const question = mode === 'hide-word' ? currentQuestion.meaning : currentQuestion.word;
-  const correctAnswer = mode === 'hide-word' ? currentQuestion.word : currentQuestion.meaning;
+  const question = currentQuestion.word; // 문제는 단어만
+  const correctAnswer = currentQuestion.meaning; // 정답은 뜻
 
-  const choices = generateChoices(correctAnswer, mode);
+  const choices = generateChoices(currentQuestion.word);
   renderQuestion(question, choices, correctAnswer);
 
   questionIndex++;
 }
 
-function generateChoices(correctAnswer, mode) {
+function generateChoices(correctWord) {
   const choicesCount = parseInt(document.getElementById('choices-count').value, 10);
 
   if (words.length < choicesCount) {
@@ -84,16 +85,12 @@ function generateChoices(correctAnswer, mode) {
     return [];
   }
 
-  const correctMeaning = mode === 'hide-word'
-    ? words.find(pair => pair.word === correctAnswer).meaning
-    : correctAnswer;
-
-  const choices = new Set([correctMeaning]); // 정답 뜻을 먼저 추가
+  const correctMeaning = words.find(pair => pair.word === correctWord)?.meaning;
+  const choices = new Set([correctMeaning]);
 
   while (choices.size < choicesCount) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
-    const choice = randomItem.meaning; // 선택지는 뜻으로만 구성
-    choices.add(choice); // 중복 방지
+    choices.add(randomItem.meaning);
   }
 
   return shuffleArray([...choices]);
@@ -103,7 +100,7 @@ function renderQuestion(question, choices, correctAnswer) {
   document.getElementById('question').innerText = question;
 
   const choicesContainer = document.getElementById('choices');
-  const fragment = document.createDocumentFragment(); // DOM 조작 최적화
+  const fragment = document.createDocumentFragment();
 
   choices.forEach(choice => {
     const button = document.createElement('button');
@@ -145,6 +142,10 @@ function resetQuiz() {
   document.getElementById('choices').innerHTML = '';
   document.getElementById('progress').style.width = '0%';
 }
+
+
+
+
 
 function loadJapaneseWords() {
   const japaneseWords = 
