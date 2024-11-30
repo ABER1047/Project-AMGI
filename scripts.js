@@ -90,7 +90,9 @@ function generateChoices(correctWord) {
 
   while (choices.size < choicesCount) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
-    choices.add(randomItem.meaning);
+    if (randomItem.word !== correctWord) {
+      choices.add(randomItem.meaning); // 다른 단어의 뜻을 선택지로 추가
+    }
   }
 
   return shuffleArray([...choices]);
