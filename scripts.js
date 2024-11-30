@@ -9,20 +9,22 @@ async function startQuiz() {
   const input = document.getElementById('word-input').value.trim();
   if (!input) return alert('단어와 뜻을 입력하세요.');
 
-  // 각 줄을 읽어 단어와 뜻을 파싱
-  const lines = input.split('\n').map(line => line.trim());
-  const validPairs = lines
-    .filter(line => line.includes(' ')) // 공백이 있는 줄만 유효
-    .map(line => {
-      const [word, ...meaningParts] = line.split(/\s+/);
-      const meaning = meaningParts.join(' '); // 뜻이 여러 단어로 구성된 경우 처리
-      return { word, meaning };
-    });
+  // 입력 문자열을 줄바꿈 단위 또는 공백 단위로 나누기
+  let lines = input.includes('\n') 
+    ? input.split('\n').map(line => line.trim()) // 줄바꿈 기준으로 처리
+    : input.split(/\s+/); // 공백 기준으로 처리
+
+  const validPairs = [];
+  for (let i = 0; i < lines.length; i += 2) {
+    const word = lines[i];
+    const meaning = lines[i + 1];
+    if (word && meaning) {
+      validPairs.push({ word, meaning });
+    }
+  }
 
   words = removeDuplicates(validPairs);
 
-  // 단어-뜻 쌍 개수 유효성 검사
-  if (words.length === 0) return alert('유효한 단어-뜻 쌍이 없습니다.');
   if (words.length < 2) return alert('최소 2개의 단어-뜻 쌍이 필요합니다.');
 
   correctCount = 0;
