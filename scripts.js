@@ -56,10 +56,8 @@ function removeDuplicates(wordPairs) {
   return Array.from(wordMap.entries()).map(([word, meaning]) => ({ word, meaning }));
 }
 
-function updateStats() {
-  document.getElementById('correct-count').innerText = correctCount;
-  document.getElementById('total-count').innerText = words.length;
-  document.getElementById('progress').style.width = `${(correctCount / words.length) * 100}%`;
+function updateStats() 
+{ document.getElementById('progress').style.width = `${(correctCount / words.length) * 100}%`;
 }
 
 async function loadNextQuestion() {
