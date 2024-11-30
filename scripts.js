@@ -24,8 +24,8 @@ async function startQuiz() {
   words = removeDuplicates(validPairs);
 
 // 단어-뜻 쌍 개수 유효성 검사
-  if (words.length % 2 !== 0) {
-    return alert('총 짝수개의 단어-뜻 쌍이 입력되어야 합니다. '+(words.length));
+  if (validPairs.length % 2 !== 0) {
+    return alert('총 짝수개의 단어-뜻 쌍이 입력되어야 합니다. '+(validPairs.length));
   }
 
   if (words.length === 0) return alert('유효한 단어-뜻 쌍이 없습니다.');
