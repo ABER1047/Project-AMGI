@@ -63,7 +63,7 @@ function updateStats() {
 
 async function loadNextQuestion() {
   if (questionIndex >= words.length) {
-    alert(`학습 완료! 정답률: ${(correctCount / words.length * 100).toFixed(1)}%`);
+    alert(`정답률 : ${(correctCount / words.length * 100).toFixed(1)}%`);
     resetQuiz();
     return;
   }
@@ -123,7 +123,7 @@ function handleAnswer(button, selectedAnswer, correctAnswer) {
     button.classList.add('correct');
   } else {
     button.classList.add('incorrect');
-    alert(`오답! 정답은: ${correctAnswer}`);
+    alert(`틀렸습니다!\n정답 : ${correctAnswer}`);
   }
 
   updateStats();
