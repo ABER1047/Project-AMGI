@@ -3,7 +3,7 @@ document.getElementById('japanese-words-btn').addEventListener('click', loadJapa
 
 let words = [];
 let correctCount = 0;
-let questionIndex = 0;
+let usedIndexes = new Set();
 
 async function startQuiz() {
   const input = document.getElementById('word-input').value.trim();
@@ -27,7 +27,10 @@ async function startQuiz() {
   if (words.length < 2) return alert('최소 2개의 단어-뜻 쌍이 필요합니다.');
 
   correctCount = 0;
-  questionIndex = 0;
+  usedIndexes.clear();
+
+  // 문제를 랜덤하게 섞음
+  words = shuffleArray(words);
 
   document.getElementById('input-section').style.display = 'none';
   document.getElementById('question-area').style.display = 'block';
@@ -60,20 +63,25 @@ function updateStats() {
 }
 
 async function loadNextQuestion() {
-  if (questionIndex >= words.length) {
+  if (usedIndexes.size >= words.length) {
     alert(`정답률 : ${(correctCount / words.length * 100).toFixed(1)}%`);
     resetQuiz();
     return;
   }
 
-  const currentQuestion = words[questionIndex];
+  // 무작위 문제를 선택 (이미 사용된 인덱스 제외)
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * words.length);
+  } while (usedIndexes.has(randomIndex));
+  usedIndexes.add(randomIndex);
+
+  const currentQuestion = words[randomIndex];
   const question = currentQuestion.word; // 문제는 단어만
   const correctAnswer = currentQuestion.meaning; // 정답은 뜻
 
   const choices = generateChoices(currentQuestion.word);
   renderQuestion(question, choices, correctAnswer);
-
-  questionIndex++;
 }
 
 function generateChoices(correctWord) {
@@ -144,7 +152,6 @@ function resetQuiz() {
   document.getElementById('choices').innerHTML = '';
   document.getElementById('progress').style.width = '0%';
 }
-
 
 
 
