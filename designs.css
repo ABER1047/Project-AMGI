@@ -118,29 +118,29 @@ button:active {
 /* 반응형 디자인: 모바일 전용 */
 @media (max-width: 600px) {
   body {
-    font-size: 20px; /* 모바일에서 전체 글씨 크기 증가 */
+    font-size: 14px; /* 모바일에서 전체 글씨 크기 감소 */
   }
 
   .container {
     width: 90%;
-    padding: 15px; /* 여유 공간 추가 */
+    padding: 10px; /* 여유 공간 감소 */
   }
 
   #question {
-    font-size: 30px; /* 질문 크기 2배로 확대 */
+    font-size: 21px; /* 질문 크기 0.7배로 축소 */
   }
 
   .choice {
-    font-size: 24px; /* 선택지 글씨 크기 증가 */
-    padding: 20px 30px; /* 버튼 크기 증가 */
+    font-size: 16.8px; /* 선택지 글씨 크기 감소 */
+    padding: 14px 21px; /* 버튼 크기 감소 */
   }
 
   button {
-    font-size: 24px; /* 버튼 글씨 크기 증가 */
-    padding: 20px 30px; /* 버튼 크기 증가 */
+    font-size: 16.8px; /* 버튼 글씨 크기 감소 */
+    padding: 14px 21px; /* 버튼 크기 감소 */
   }
 
   #progress-bar {
-    height: 16px; /* 진행 바 높이 증가 */
+    height: 11.2px; /* 진행 바 높이 감소 */
   }
 }
