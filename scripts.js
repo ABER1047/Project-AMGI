@@ -9,15 +9,19 @@ function startQuiz() {
   const input = document.getElementById('word-input').value.trim();
   if (!input) return alert('단어와 뜻을 입력하세요.');
 
-  // 단어-뜻 쌍 생성 및 빈 줄 제거
-  words = input
-    .split('\n')
-    .map(line => line.trim())
-    .filter(line => line && line.includes(' '))
-    .map(line => {
-      const [word, meaning] = line.split(/\s+/);
-      return { word, meaning };
-    });
+  // 단어-뜻 쌍 생성
+  words = Array.from(
+    new Set(
+      input
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line && line.includes(' '))
+        .map(line => {
+          const [word, meaning] = line.split(/\s+/);
+          return JSON.stringify({ word, meaning });
+        })
+    )
+  ).map(item => JSON.parse(item));
 
   if (words.length === 0) return alert('유효한 단어-뜻 쌍이 없습니다.');
 
@@ -34,14 +38,13 @@ function startQuiz() {
 function updateStats() {
   document.getElementById('correct-count').innerText = correctCount;
   document.getElementById('total-count').innerText = words.length;
-  const progress = (questionIndex / words.length) * 100; // 전체 진행률
-  document.getElementById('progress').style.width = `${progress}%`;
+  document.getElementById('progress').style.width = `${(correctCount / words.length) * 100}%`;
 }
 
 function loadNextQuestion() {
   if (questionIndex >= words.length) {
     alert(`학습 완료! 정답률: ${(correctCount / words.length * 100).toFixed(1)}%`);
-    location.reload(); // 페이지 새로고침
+    resetQuiz();
     return;
   }
 
@@ -53,35 +56,32 @@ function loadNextQuestion() {
   const choices = generateChoices(correctAnswer, mode);
   renderQuestion(question, choices, correctAnswer);
 
-  // questionIndex 증가
   questionIndex++;
 }
 
 function generateChoices(correctAnswer, mode) {
-  const choicesCount = parseInt(document.getElementById('choices-count').value);
-  const choices = new Set([correctAnswer]);
+  const choicesCount = parseInt(document.getElementById('choices-count').value, 10);
+  const choices = [correctAnswer];
 
-  while (choices.size < Math.min(choicesCount, words.length)) {
+  while (choices.length < choicesCount) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
     const choice = mode === 'hide-word' ? randomItem.word : randomItem.meaning;
-    choices.add(choice);
+    if (!choices.includes(choice)) choices.push(choice);
   }
 
-  return shuffleArray([...choices]);
+  return shuffleArray(choices);
 }
 
 function renderQuestion(question, choices, correctAnswer) {
-  const questionArea = document.getElementById('question-area');
-  questionArea.querySelector('#question').innerText = question;
+  document.getElementById('question').innerText = question;
 
-  const choicesContainer = questionArea.querySelector('#choices');
+  const choicesContainer = document.getElementById('choices');
   choicesContainer.innerHTML = '';
 
   choices.forEach(choice => {
     const button = document.createElement('button');
     button.className = 'choice';
     button.innerText = choice;
-
     button.addEventListener('click', () => handleAnswer(button, choice, correctAnswer));
     choicesContainer.appendChild(button);
   });
@@ -108,9 +108,19 @@ function shuffleArray(array) {
   return array;
 }
 
+function resetQuiz() {
+  document.getElementById('input-section').style.display = 'block';
+  document.getElementById('question-area').style.display = 'none';
+  document.getElementById('word-input').value = '';
+  document.getElementById('choices').innerHTML = '';
+  document.getElementById('progress').style.width = '0%';
+}
+
+
+
 function loadJapaneseWords() {
-  const japaneseWords = `
-気分 기분
+  const japaneseWords = 
+`気分 기분
 安全 안전
 期待 기대
 笑顔 웃는 얼굴
@@ -471,7 +481,6 @@ function loadJapaneseWords() {
 作る 만들다
 開く 열다
 閉じる 닫다
-運転する 운전하다
-  `;
+運転する 운전하다`;
   document.getElementById('word-input').value = japaneseWords.trim();
 }
