@@ -140,3 +140,31 @@ button:active {
     padding: 10px 16px;
   }
 }
+
+
+
+
+/* 반응형 디자인: 모바일 전용 */
+@media (max-width: 600px) {
+  body {
+    font-size: 18px; /* 전체 글씨 크기 증가 */
+  }
+
+  #question {
+    font-size: 24px; /* 질문 크기 증가 */
+  }
+
+  .choice {
+    font-size: 20px; /* 선택지 글씨 크기 증가 */
+    padding: 15px 20px; /* 버튼 크기 증가 */
+  }
+
+  button {
+    font-size: 20px; /* 버튼 글씨 크기 증가 */
+    padding: 15px 20px; /* 버튼 크기 증가 */
+  }
+
+  #progress-bar {
+    height: 12px; /* 진행 바 높이 증가 */
+  }
+}
