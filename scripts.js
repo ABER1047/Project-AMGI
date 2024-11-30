@@ -9,26 +9,21 @@ async function startQuiz() {
   const input = document.getElementById('word-input').value.trim();
   if (!input) return alert('단어와 뜻을 입력하세요.');
 
+  // 각 줄을 읽어 단어와 뜻을 파싱
   const lines = input.split('\n').map(line => line.trim());
-  const validPairs = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i] && lines[i].includes(' ')) {
-      const [word, meaning] = lines[i].split(/\s+/);
-      validPairs.push({ word, meaning });
-    }
-  }
-
-  
+  const validPairs = lines
+    .filter(line => line.includes(' ')) // 공백이 있는 줄만 유효
+    .map(line => {
+      const [word, ...meaningParts] = line.split(/\s+/);
+      const meaning = meaningParts.join(' '); // 뜻이 여러 단어로 구성된 경우 처리
+      return { word, meaning };
+    });
 
   words = removeDuplicates(validPairs);
 
-// 단어-뜻 쌍 개수 유효성 검사
-  if (validPairs.length % 2 !== 0) {
-    return alert('총 짝수개의 단어-뜻 쌍이 입력되어야 합니다. '+(validPairs.length));
-  }
-
+  // 단어-뜻 쌍 개수 유효성 검사
   if (words.length === 0) return alert('유효한 단어-뜻 쌍이 없습니다.');
+  if (words.length < 2) return alert('최소 2개의 단어-뜻 쌍이 필요합니다.');
 
   correctCount = 0;
   questionIndex = 0;
@@ -44,11 +39,14 @@ function removeDuplicates(wordPairs) {
   const wordMap = new Map();
 
   wordPairs.forEach(pair => {
-    if (!wordMap.has(pair.word)) {
-      wordMap.set(pair.word, pair.meaning);
+    const trimmedWord = pair.word.trim();
+    const trimmedMeaning = pair.meaning.trim();
+    if (!wordMap.has(trimmedWord)) {
+      wordMap.set(trimmedWord, trimmedMeaning);
     } else {
-      // 중복된 경우 - 여러 의미가 있을 경우 합침
-      wordMap.set(pair.word, `${wordMap.get(pair.word)}, ${pair.meaning}`);
+      // 중복된 단어의 뜻을 추가
+      const existingMeaning = wordMap.get(trimmedWord);
+      wordMap.set(trimmedWord, `${existingMeaning}, ${trimmedMeaning}`);
     }
   });
 
@@ -82,22 +80,21 @@ async function loadNextQuestion() {
 function generateChoices(correctAnswer, mode) {
   const choicesCount = parseInt(document.getElementById('choices-count').value, 10);
 
-  // 단어 개수가 선택지 수보다 적은 경우 처리
   if (words.length < choicesCount) {
     alert(`단어 수가 선택지 수(${choicesCount})보다 적습니다. 단어를 더 입력하세요.`);
     resetQuiz();
     return [];
   }
 
-  const choices = [correctAnswer];
+  const choices = new Set([correctAnswer]);
 
-  while (choices.length < choicesCount) {
+  while (choices.size < choicesCount) {
     const randomItem = words[Math.floor(Math.random() * words.length)];
     const choice = mode === 'hide-word' ? randomItem.word : randomItem.meaning;
-    if (!choices.includes(choice)) choices.push(choice);
+    choices.add(choice);
   }
 
-  return shuffleArray(choices);
+  return shuffleArray([...choices]);
 }
 
 function renderQuestion(question, choices, correctAnswer) {
