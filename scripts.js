@@ -67,7 +67,6 @@ let isReverseMode = false; // 리버스 모드 초기화
 // 리버스 버튼 이벤트 리스너
 document.getElementById('reverse-btn').addEventListener('click', () => {
   isReverseMode = !isReverseMode;
-  alert(`리버스 모드가 ${isReverseMode ? '활성화' : '비활성화'}되었습니다.`);
 });
 
 // loadNextQuestion 함수 수정
