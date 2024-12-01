@@ -131,13 +131,13 @@ button:active {
   }
 
   .choice {
-    font-size: 16.8px; /* 선택지 글씨 크기 감소 */
-    padding: 14px 21px; /* 버튼 크기 감소 */
+    font-size: 16.8px; /* 선택지 글씨 크기 */
+    padding: 14px 21px; /* 버튼 크기 */
   }
 
   button {
-    font-size: 16.8px; /* 버튼 글씨 크기 감소 */
-    padding: 14px 21px; /* 버튼 크기 감소 */
+    font-size: 12.8px; /* 버튼 글씨 크기 */
+    padding: 11px 17px; /* 버튼 크기 */
   }
 
   #progress-bar {
