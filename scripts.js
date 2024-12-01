@@ -62,6 +62,15 @@ function updateStats() {
   document.getElementById('progress').style.width = `${(correctCount / words.length) * 100}%`;
 }
 
+let isReverseMode = false; // 리버스 모드 초기화
+
+// 리버스 버튼 이벤트 리스너
+document.getElementById('reverse-btn').addEventListener('click', () => {
+  isReverseMode = !isReverseMode;
+  alert(`리버스 모드가 ${isReverseMode ? '활성화' : '비활성화'}되었습니다.`);
+});
+
+// loadNextQuestion 함수 수정
 async function loadNextQuestion() {
   if (usedIndexes.size >= words.length) {
     alert(`정답률 : ${(correctCount / words.length * 100).toFixed(1)}%`);
@@ -69,7 +78,6 @@ async function loadNextQuestion() {
     return;
   }
 
-  // 무작위 문제를 선택 (이미 사용된 인덱스 제외)
   let randomIndex;
   do {
     randomIndex = Math.floor(Math.random() * words.length);
@@ -77,11 +85,44 @@ async function loadNextQuestion() {
   usedIndexes.add(randomIndex);
 
   const currentQuestion = words[randomIndex];
-  const question = currentQuestion.word; // 문제는 단어만
-  const correctAnswer = currentQuestion.meaning; // 정답은 뜻
+  let question, correctAnswer, choices;
 
-  const choices = generateChoices(currentQuestion.word);
+  if (isReverseMode) {
+    // 리버스 모드: 뜻을 문제로, 단어를 선지로
+    question = currentQuestion.meaning;
+    correctAnswer = currentQuestion.word;
+    choices = generateReverseChoices(currentQuestion.meaning);
+  } else {
+    // 기본 모드: 단어를 문제로, 뜻을 선지로
+    question = currentQuestion.word;
+    correctAnswer = currentQuestion.meaning;
+    choices = generateChoices(currentQuestion.word);
+  }
+
   renderQuestion(question, choices, correctAnswer);
+}
+
+// 리버스 모드 선택지 생성 함수 추가
+function generateReverseChoices(correctMeaning) {
+  const choicesCount = parseInt(document.getElementById('choices-count').value, 10);
+
+  if (words.length < choicesCount) {
+    alert(`단어 수가 선택지 수(${choicesCount})보다 적습니다. 단어를 더 입력하세요.`);
+    resetQuiz();
+    return [];
+  }
+
+  const correctWord = words.find(pair => pair.meaning === correctMeaning)?.word;
+  const choices = new Set([correctWord]);
+
+  while (choices.size < choicesCount) {
+    const randomItem = words[Math.floor(Math.random() * words.length)];
+    if (randomItem.meaning !== correctMeaning) {
+      choices.add(randomItem.word); // 다른 단어를 선택지로 추가
+    }
+  }
+
+  return shuffleArray([...choices]);
 }
 
 function generateChoices(correctWord) {
