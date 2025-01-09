@@ -1,146 +1,170 @@
 /* 기본 스타일 */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #1c1c1c; /* 어두운 배경 */
-  color: white; /* 흰색 텍스트 */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+body 
+{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c; /* 어두운 배경 */
+    color: white; /* 흰색 텍스트 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  text-align: center;
+.container 
+{
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
 }
 
-#stats {
-  font-size: 18px;
-  margin-bottom: 10px;
+#stats 
+{
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
-#progress-bar {
-  width: 100%;
-  height: 10px;
-  background-color: #444;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 20px;
+#progress-bar 
+{
+    width: 100%;
+    height: 10px;
+    background-color: #444;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
-#progress {
-  width: 0;
-  height: 100%;
-  background-color: white;
-  transition: width 0.3s;
+#progress 
+{
+    width: 0;
+    height: 100%;
+    background-color: white;
+    transition: width 0.3s;
 }
 
-#question-area {
-  margin: 20px 0;
+#question-area 
+{
+    margin: 20px 0;
 }
 
-#question {
-  font-size: 22px; /* 기본 크기 */
-  font-weight: bold;
-  margin-bottom: 20px;
+#question 
+{
+    font-size: 22px; /* 기본 크기 */
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-#choices {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+#choices 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.choice {
-  padding: 12px 20px; /* 기본 버튼 크기 */
-  background-color: #333;
-  color: white;
-  border: 2px solid #555;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px; /* 기본 버튼 글씨 크기 */
-  transition: background-color 0.2s, border-color 0.2s;
+.choice 
+{
+    padding: 12px 20px; /* 기본 버튼 크기 */
+    background-color: #333;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* 기본 버튼 글씨 크기 */
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
-.choice:hover {
-  background-color: #555;
+.choice:hover 
+{
+    background-color: #555;
 }
 
-.choice.correct {
-  border-color: #4CAF50;
+.choice.correct 
+{
+    border-color: #4CAF50;
 }
 
-.choice.incorrect {
-  border-color: #F44336;
+.choice.incorrect 
+{
+    border-color: #F44336;
 }
 
-textarea {
-  width: 100%;
-  height: 150px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
+textarea 
+{
+    width: 100%;
+    height: 150px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
 }
 
-input[type="number"] {
-  width: 60px;
-  padding: 5px;
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
-  border-radius: 5px;
-  text-align: center;
+input[type="number"] 
+{
+    width: 60px;
+    padding: 5px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    text-align: center;
 }
 
-button {
-  padding: 12px 24px; /* 기본 버튼 크기 */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px; /* 기본 버튼 글씨 크기 */
+button 
+{
+    padding: 12px 24px; /* 기본 버튼 크기 */
+    background-color: #3c30df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* 기본 버튼 글씨 크기 */
 }
 
-button:hover {
-  background-color: #0056b3;
+button:hover 
+{
+    background-color: #3229b4;
 }
 
-button:active {
-  background-color: #003f7f;
+button:active 
+{
+    background-color: #241c86;
 }
 
 /* 반응형 디자인: 모바일 전용 */
-@media (max-width: 600px) {
-  body {
+@media (max-width: 600px) 
+{
+body 
+{
     font-size: 14px; /* 모바일에서 전체 글씨 크기 감소 */
-  }
+}
 
-  .container {
+.container 
+{
     width: 90%;
     padding: 10px; /* 여유 공간 감소 */
-  }
+}
 
-  #question {
+#question 
+{
     font-size: 21px; /* 질문 크기 0.7배로 축소 */
-  }
+}
 
-  .choice {
+.choice 
+{
     font-size: 16.8px; /* 선택지 글씨 크기 */
     padding: 14px 21px; /* 버튼 크기 */
-  }
+}
 
-  button {
+button 
+{
     font-size: 12.8px; /* 버튼 글씨 크기 */
     padding: 11px 17px; /* 버튼 크기 */
-  }
+}
 
-  #progress-bar {
+#progress-bar 
+{
     height: 11.2px; /* 진행 바 높이 감소 */
-  }
+}
 }
